@@ -15,7 +15,7 @@ exports.encryptPassword = (password) => {
     return encrypted;
 }
 
-exports.decryptPassword = (password, encrypted) => {
+exports.decryptPassword = (encrypted) => {
     const algorithm = 'aes-192-cbc';
     // const password = 'Password used to generate key';
     // Use the async `crypto.scrypt()` instead.

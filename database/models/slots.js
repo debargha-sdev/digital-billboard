@@ -3,20 +3,29 @@ const Schema = mongoose.Schema;
 
 const SlotsSchema = new Schema({
 
-    slotStart: {
-        type: Date,
+    slotDate: {
+        type: Date, // date in ISO format with start time
         required: true
     },
-    slotEnd: {
-        type: Date,
+    timeStart: {
+        type: String, // eg: 07:00 pm
         required: true
     },
-    adId: {
-        type: Schema.Types.ObjectId
+    startTimestamp: {
+        type: Number, // unix timestamp (miliseconds)
+        required: true
+    },
+    endTimestamp: {
+        type: Number, // unix timestamp (miliseconds)
+        required: true
     },
     duration: {
         type: Number, // in minute
         default: 60
+    },
+    adId: {
+        type: Schema.Types.ObjectId,
+        default: null
     },
     specialSlot: {
         type: Boolean,

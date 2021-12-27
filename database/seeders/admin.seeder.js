@@ -7,7 +7,7 @@ module.exports = async () => {
     if (!adminExists){
         await UserModel.create({
             email: adminEmail,
-            password: encryptPassword(process.env.password),
+            password: encryptPassword(process.env.PASSWORD.toString()),
             userType: 'admin'
         })
     } else {

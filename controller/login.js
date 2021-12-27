@@ -10,10 +10,9 @@ exports.login = async (req, res) => {
 
     if (userDetails) {
         let pwd = decryptPassword(userDetails.password);
-        console.log(pwd);
 
-        if (password === pwd) {
-            const token = jwt.sign(userDetails, process.env.KEY);
+        if (password.toString() === pwd) {
+            const token = jwt.sign({data: userDetails}, process.env.KEY);
             res.json({ success: true, data: userDetails, token: token, message: "Login successful" });
 
         } else {
