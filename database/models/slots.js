@@ -34,7 +34,11 @@ const SlotsSchema = new Schema({
     displayed: {
         type: Boolean,
         default: false
-    }
+    },
+    deleted:{
+        type: Boolean,
+        default: false
+    },
 
 }, {timestamps: true});
 

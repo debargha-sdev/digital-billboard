@@ -1,6 +1,23 @@
 const SlotModel = require('../database/models/slots');
 const moment = require('moment');
 
+/**
+ * Get slots function is used to fetch all undeleted slots
+ */
+exports.getSlots = async (req, res) => {
+    const slots = await SlotModel.find({deleted: false});
+    res.json({success: true, data: slots, message: "Data fetched successfully"});
+}
+
+/**
+ * Create slot function is used to create a new slot on a specific 
+ * date and time if there is no slot exists already
+ * @param slotDate Slot date with start time in ISO format
+ * @param timeStart string contains the start time of the slot
+ * @param duration Duration of the slot (*optional)
+ * @param specialSlot Special slot flag (*optional)
+ * @returns res - { success<Boolean>, message<String>, data<Object>, err<String> }
+ */
 exports.createSlot = async (req, res) => {
     const { slotDate, timeStart, duration, specialSlot } = req.body;
 
@@ -27,7 +44,8 @@ exports.createSlot = async (req, res) => {
                     { endTimestamp: { $gt: data.endTimestamp } }
                 ]
             },
-        ]
+        ],
+        deleted: false
     });
 
     if (slotExists.length) {
@@ -44,6 +62,16 @@ exports.createSlot = async (req, res) => {
 
 }
 
+/**
+ * Create slot function is used to create a new slot on a specific 
+ * date and time if there is no slot exists already
+ * @param slotId '_id' of the slot
+ * @param slotDate Slot date with start time in ISO format
+ * @param timeStart string contains the start time of the slot
+ * @param duration Duration of the slot (*optional)
+ * @param specialSlot Special slot flag (*optional)
+ * @returns res - { success<Boolean>, message<String>, data<Object>, err<String> }
+ */
 exports.updateSlot = async (req, res) => {
     const { slotId, slotDate, timeStart, duration, specialSlot } = req.body;
 
@@ -71,7 +99,8 @@ exports.updateSlot = async (req, res) => {
                     { endTimestamp: { $gt: data.endTimestamp } }
                 ]
             },
-        ]
+        ],
+        deleted: false
     });
 
     if (slotExists.length) {
@@ -86,4 +115,26 @@ exports.updateSlot = async (req, res) => {
         res.status(400).json({ success: false, message: "Failed to update data", err: err.toString() })
     }
 
+}
+
+/**
+ * Delete slot function change the slot deleted value to true
+ * @param slotId '_id' of the slot
+ * @returns res - { success<Boolean>, message<String>, data<Object>, err<String> }
+ */
+exports.deleteSlot = async (req, res) => {
+    const { slotId } = req.body;
+    const slotData = await SlotModel.findById(slotId);
+
+    // check slot data exists or not
+    if (!slotData) {
+        return res.status(400).json({ success: false, message: "Invalid slot id" });
+
+    } // if data already deleted (deleted == true) then return error
+    else if (slotData.deleted) {
+        return res.status(400).json({ success: false, message: "Slot is already deleted" });
+    }
+
+    const deleted = await SlotModel.findByIdAndUpdate(slotId, { deleted: true });
+    res.json({ success: true, message: "Slot deleted" });
 }
