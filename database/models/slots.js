@@ -21,6 +21,10 @@ const SlotsSchema = new Schema({
     specialSlot: {
         type: Boolean,
         default: false
+    },
+    displayed: {
+        type: Boolean,
+        default: false
     }
 
 }, {timestamps: true});
