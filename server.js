@@ -21,6 +21,7 @@ require('./database').connect(true);
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/public', express.static(__dirname + '/public/uploads/'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 // API Routes
 app.use('/', require('./routes'));

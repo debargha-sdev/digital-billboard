@@ -5,8 +5,8 @@ const moment = require('moment');
  * Get slots function is used to fetch all undeleted slots
  */
 exports.getSlots = async (req, res) => {
-    const slots = await SlotModel.find({deleted: false});
-    res.json({success: true, data: slots, message: "Data fetched successfully"});
+    const slots = await SlotModel.find({ deleted: false }).sort({startTimestamp: -1}).populate('adId');
+    res.json({ success: true, data: slots, message: "Data fetched successfully" });
 }
 
 /**

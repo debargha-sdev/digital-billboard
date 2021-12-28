@@ -25,7 +25,8 @@ const SlotsSchema = new Schema({
     },
     adId: {
         type: Schema.Types.ObjectId,
-        default: null
+        default: null,
+        ref: 'ads'
     },
     specialSlot: {
         type: Boolean,
