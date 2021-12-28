@@ -34,8 +34,8 @@ exports.createAd = async (req, res) => {
 
 /**
  * Assign to slot function is used to assign a add to a specific time slot if the slot is free
- * @param slotId
- * @param adId
+ * @param slotId _id' of the slot
+ * @param adId _id' of the ad
  */
 exports.assignAdToSlot = async (req, res) => {
     const { slotId, adId } = req.body;
@@ -73,7 +73,10 @@ exports.assignAdToSlot = async (req, res) => {
     }
 }
 
-
+/**
+ * Unassign slot function is used to unassign a slot
+ * @param slotId '_id' of the slot
+ */
 exports.unassignAd = async (req, res) => {
     const { slotId } = req.body;
 
@@ -99,8 +102,8 @@ exports.unassignAd = async (req, res) => {
 /**
  * Update Assign to slot function is used to assign a add to a specific time 
  * slot if the slot is previously assigned
- * @param slotId
- * @param adId
+ * @param slotId _id' of the slot
+ * @param adId _id' of the ad
  */
 exports.updateAssignedAd = async (req, res) => {
     const { slotId, adId } = req.body;

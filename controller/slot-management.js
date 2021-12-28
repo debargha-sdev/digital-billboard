@@ -26,8 +26,8 @@ exports.createSlot = async (req, res) => {
         timeStart: timeStart,
         startTimestamp: moment(slotDate).valueOf(),
         endTimestamp: moment(slotDate).add(duration || 60, 'minutes').valueOf(),
-        duration: parseInt(duration) || 60,
-        specialSlot: specialSlot || false
+        duration: duration,
+        specialSlot: specialSlot
     }
 
     const slotExists = await SlotModel.find({
@@ -80,8 +80,8 @@ exports.updateSlot = async (req, res) => {
         timeStart: timeStart,
         startTimestamp: moment(slotDate).valueOf(),
         endTimestamp: moment(slotDate).add(duration || 60, 'minutes').valueOf(),
-        duration: parseInt(duration) || 60,
-        specialSlot: specialSlot || false
+        duration: duration,
+        specialSlot: specialSlot
     }
 
     const slotExists = await SlotModel.find({
