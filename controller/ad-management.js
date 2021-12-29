@@ -14,7 +14,7 @@ const fs = require('fs');
 exports.createAd = async (req, res) => {
     const { adName } = req.body;
 
-    console.log('========',req.file.filename)
+    // console.log('========',req.file.filename)
     if (!req.file.filename) {
         return res.status(400).json({ success: false, message: 'Invalid file' });
     }

@@ -6,7 +6,12 @@ exports.uploadAd = multer({
     storage: multer.diskStorage({
         destination: 'public/uploads/',
         filename: (req, file, cb) => {
-            cb(null, Date.now() + path.extname(file.originalname));
+            if (file.mimetype == "image/png" || file.mimetype == "image/jpg" ||
+                file.mimetype == "image/jpeg" || file.mimetype == "video/mp4") {
+                cb(null, Date.now() + path.extname(file.originalname));
+            } else {
+                cb("Error: Invalid filetype");
+            }
         }
     })
 }).single('file');
